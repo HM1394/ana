@@ -8,7 +8,7 @@ token='m1';%已结束项目任务数据文件名
 loadfilename=strcat(strcat(pathWriteMat,token),'.mat');
 load(loadfilename,'compl_Mission_lat_lon','compl_Mission_price','compl_Mission','compl_Mission_ID');
 mid_Mission_price=compl_Mission_price';
-dis_limit1=1;          %第一有效距离
+dis_limit1=3;          %第一有效距离
 s=(mission_Distance-dis_limit1)<0;
 for id=1:length(s(:,1))
     valid_Mission_price=mid_Mission_price(s(id,:));
@@ -17,7 +17,7 @@ for id=1:length(s(:,1))
     stat_Mission_Sum(id,1)=sum(valid_Mission_price);
     stat_Mission_Std(id,1)=std(valid_Mission_price);
 end
-dis_limit2=5;          %第二有效距离
+dis_limit2=4;          %第二有效距离
 s=(mission_Distance-dis_limit2)<0;
 for id=1:length(s(:,1))
     valid_Mission_price=mid_Mission_price(s(id,:));
@@ -26,7 +26,7 @@ for id=1:length(s(:,1))
     stat_Mission_Sum(id,2)=sum(valid_Mission_price);
     stat_Mission_Std(id,2)=std(valid_Mission_price);
 end
-dis_limit3=15;          %第三有效距离
+dis_limit3=5;          %第三有效距离
 s=(mission_Distance-dis_limit3)<0;
 for id=1:length(s(:,1))
     valid_Mission_price=mid_Mission_price(s(id,:));

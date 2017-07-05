@@ -8,7 +8,7 @@ token='m2';%会员信息数据文件名
 loadfilename=strcat(strcat(pathWriteMat,token),'.mat');
 load(loadfilename,'member_Mission_Limit','member_Mission_Begin_Time','member_Credit');
 mid_Member_Credit=member_Credit';
-dis_limit1=1;          %第一有效距离
+dis_limit1=3;          %第一有效距离
 s=(mission_Member_Distance-dis_limit1)<0;
 for id=1:length(s(:,1))
     valid_Member_Credit=mid_Member_Credit(s(id,:));
@@ -17,7 +17,7 @@ for id=1:length(s(:,1))
     stat_Member_Sum(id,1)=sum(valid_Member_Credit);
     stat_Member_Std(id,1)=std(valid_Member_Credit);
 end
-dis_limit2=5;          %第二有效距离
+dis_limit2=4;          %第二有效距离
 s=(mission_Member_Distance-dis_limit2)<0;
 for id=1:length(s(:,1))
     valid_Member_Credit=mid_Member_Credit(s(id,:));
@@ -26,7 +26,7 @@ for id=1:length(s(:,1))
     stat_Member_Std(id,2)=std(valid_Member_Credit);
     stat_Member_Sum(id,2)=sum(valid_Member_Credit);
 end
-dis_limit3=15;          %第三有效距离
+dis_limit3=5;          %第三有效距离
 s=(mission_Member_Distance-dis_limit3)<0;
 for id=1:length(s(:,1))
     valid_Member_Credit=mid_Member_Credit(s(id,:));
