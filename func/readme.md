@@ -1,0 +1,10 @@
+按会员分配比例确定每个会员可选的任务数，按任务选择时间由会员依次选择任务，直至任务全部选择完毕，
+确定实际选到任务的会员集合。
+定价规则：
+以每个任务点为中心，划定确定的distance_limit值为半径的圆，计算圆内的其它所有任务点距中心任务点距离的平均值,
+组成向量stat_distance_limit_Mission_Distance_mean；
+对stat_distance_limit_Mission_Distance_mean向量标准化，
+x=stat_distance_limit_Mission_Distance_mean./std(stat_distance_limit_Mission_Distance_mean)；
+以每个任务的价格组成向量compl_price，y=compl_price；
+可以求得：
+y=4.513*x+3.408*10^(-13)
