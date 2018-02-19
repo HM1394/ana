@@ -8,7 +8,7 @@ load(loadfilename,'compl_Mission_price','compl_Mission','compl_Mission_ID');
 %%
 %计算每个任务点最近的memCount_limit个会员的距离、信誉值的平均值anyCount_MemDistance_Mean，anyCount_MemCredit_Mean
 %和标准差anyCount_MemDistance_Std、anyCount_MemCredit_Std,并记入anyCount_MemData文件
-memCount_limit=[20,30,50];          %选择20人，30人，50人统计
+memCount_limit=[5,22,60];          %选择5人，22人，60人统计
 anyCount_Member_DisMean=[];
 anyCount_Member_DisStd=[];
 anyCount_Member_CreMean=[];
@@ -52,7 +52,7 @@ save(loadfilename,'anyCount_Mission_DisMean','anyCount_Mission_DisStd','anyCount
 %%
 %计算每个任务点为中心，misDis_limit公里为半径的圆周范围内会员的总数；会员的信誉度均值、标准差；会员距中心任务的距离的均值、标准差；会员预分配的任务数;
 %任务总数；任务距中心任务距离的均值、标准差；任务价格的均值、标准差；
-misDis_limit=[2,5,16]; %选择2公里，5公里，16公里
+misDis_limit=[2,5,50]; %选择2公里，5公里，50公里
 anyDis_Member_Count=[];
 anyDis_Member_DisMean=[];
 anyDis_Member_DisSum=[];

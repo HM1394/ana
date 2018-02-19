@@ -1,0 +1,160 @@
+%先用所有的因素进行分析
+% x=[stCompl_Mission_Price,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd,...
+% 	stCount_Member_CreMean,stCount_Member_CreStd,stCount_Mission_DisMean,stCount_Mission_DisStd,...
+% 	stCount_Mission_PriMean,stCount_Mission_PriStd,stDis_Member_Count,stDis_Member_CreSum,stDis_Member_CreMean,stDis_Member_CreStd,...
+% 	stDis_Member_DisSum,stDis_Member_DisMean,stDis_Member_DisStd,stDis_Member_MisSum,stDis_Mission_Count,...
+% 	stDis_Mission_PriSum,stDis_Mission_PriMean,stDis_Mission_PriStd,stDis_Mission_DisSum,stDis_Mission_DisMean,stDis_Mission_DisStd,...
+% 	stKer_Mission_Distance,stMemberKer_Mission_Distance];%88.87%,317.6,530
+%清理可能有NaN数据的因素
+% x=[stCompl_Mission_Price,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd,...
+% 	stCount_Member_CreMean,stCount_Member_CreStd,stCount_Mission_DisMean,stCount_Mission_DisStd,...
+% 	stCount_Mission_PriMean,stCount_Mission_PriStd,stDis_Member_Count,stDis_Member_CreSum,stDis_Member_CreMean(:,3),stDis_Member_CreStd(:,3),...
+% 	stDis_Member_DisSum,stDis_Member_DisMean(:,3),stDis_Member_DisStd(:,3),stDis_Member_MisSum,stDis_Mission_Count,...
+% 	stDis_Mission_PriSum,stDis_Mission_PriMean(:,3),stDis_Mission_PriStd(:,3),stDis_Mission_DisSum,stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+% 	stKer_Mission_Distance,stMemberKer_Mission_Distance];%未修正78.59%,699.08,835;修正81.3%,401.83,835
+%根据结果的beta.p值取每种因素的最小值进行分析
+% x=[stCompl_Mission_Price,stCount_Member_MisSum(:,3),stCount_Member_DisMean(:,3),stCount_Member_DisStd(:,3),...
+% 	stCount_Member_CreMean(:,1),stCount_Member_CreStd(:,1),stCount_Mission_DisMean(:,2),stCount_Mission_DisStd(:,3),...
+% 	stCount_Mission_PriMean(:,1),stCount_Mission_PriStd(:,3),stDis_Member_Count(:,3),stDis_Member_CreSum(:,3),stDis_Member_CreMean(:,3),stDis_Member_CreStd(:,3),...
+% 	stDis_Member_DisSum(:,3),stDis_Member_DisMean(:,3),stDis_Member_DisStd(:,3),stDis_Member_MisSum(:,2),stDis_Mission_Count(:,2),...
+% 	stDis_Mission_PriSum(:,2),stDis_Mission_PriMean(:,3),stDis_Mission_PriStd(:,3),stDis_Mission_DisSum(:,3),stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+% 	stKer_Mission_Distance,stMemberKer_Mission_Distance];%76.5%,772.98,830
+%根据beta值小于0.02，选取因素
+% x=[stCount_Member_MisSum(:,3),stCount_Member_DisStd(:,3),...
+% 	stCount_Member_CreMean(:,1),...
+% 	stCount_Mission_PriStd(:,3),stDis_Member_CreMean(:,3),...
+% 	stDis_Member_DisMean(:,3),...
+% 	stDis_Mission_PriMean(:,3),stDis_Mission_DisSum(:,3),stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+% 	stMemberKer_Mission_Distance];%75.9%,801.66,830
+%其它因素组合
+% x=[stCount_Member_MisSum(:,3),stCount_Member_DisStd(:,3),...
+% 	stCount_Member_CreMean(:,1),...
+% 	stCount_Mission_PriMean(:,1),stCount_Mission_PriStd(:,3),stDis_Member_CreMean(:,2),stDis_Member_CreStd(:,3),...
+% 	stDis_Member_DisMean(:,3),stDis_Member_MisSum(:,2),stDis_Mission_Count(:,2),...
+% 	stDis_Mission_PriMean(:,3),stDis_Mission_PriStd(:,1),stDis_Mission_DisSum(:,3),stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+% 	stMemberKer_Mission_Distance];%76.99%,621.9,691
+% x=[stCount_Member_MisSum(:,3),stCount_Member_DisStd(:,3),...
+% 	stCount_Member_CreMean(:,1),...
+% 	stCount_Mission_PriMean(:,1),stCount_Mission_PriStd(:,3),stDis_Member_CreMean(:,2),stDis_Member_CreStd(:,3),...
+% 	stDis_Member_DisMean(:,3),stDis_Member_MisSum(:,2),...
+% 	stDis_Mission_PriMean(:,3),stDis_Mission_PriStd(:,1),stDis_Mission_DisSum(:,3),stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+% 	stMemberKer_Mission_Distance];%76.41%,623.7,691
+% x=[stCompl_Mission_Price,stDis_Mission_Count,stDis_Member_CreSum,stCount_Member_CreMean,stDis_Member_MisSum,...
+%   stCount_Member_DisMean,stDis_Member_Count,stCount_Mission_DisMean,stMemberKer_Mission_Distance];%71.5%,864.8,835
+%根据结果的beta值取每种因素的最小值进行分析
+% x=[stCompl_Mission_Price,stDis_Mission_Count(:,1),stDis_Member_CreSum(:,3),stCount_Member_CreMean(:,3),stDis_Member_MisSum(:,3),...
+%   stCount_Member_DisMean,stDis_Member_Count(:,3),stCount_Mission_DisMean(:,2),stMemberKer_Mission_Distance];%70.9%,893.04,835
+%根据beta值小于0.02，选取stMemberKer_Mission_Distance,stCompl_Mission_Price,stDis_Member_Count(:,3),stDis_Member_MisSum(:,3),stDis_Member_CreSum(:,3)为各回归输入参数
+% x=[stMemberKer_Mission_Distance,stCompl_Mission_Price,stDis_Member_Count(:,3),stDis_Member_MisSum(:,3),stDis_Member_CreSum(:,3)];%70.06%,904.38,853
+%后三项的相关系统表示线性相关，选取第3项代表
+% x=[stMemberKer_Mission_Distance,stCompl_Mission_Price,stDis_Member_Count(:,3)];%67.78%,1040.7,835
+log_Remove=stats.residd<2.5;
+x1=x(log_Remove,:);
+y1=y(log_Remove,:);
+l_c1=l_c(log_Remove,:);
+[b1,dev1,stats1] = mnrfit(x1,y1);
+yfit1=mnrval(b1, x,stats1);
+l1=yfit1(:,2)+l_c;
+ty1=(yfit1(:,2)>0.5);
+log_ty1=l_c-ty1;
+p_ty1=1-sum(abs(log_ty1))/length(log_ty1);%拟合正确率
+scrsz = get(0,'ScreenSize');
+hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
+set(hF1,'Name','logit标准化残差图','Colormap',spring);
+scatter(1:length(stats1.residd),stats1.residd,50,'x')	
+
+%%
+% %应用logit回归法建模2
+% %anRelat_Data=[compl_Mission,stCompl_Mission_Price,stDis_Mission_Count(:,3),stDis_Member_CreSum(:,3),stCount_Member_CreMean(:,3),stDis_Member_MisSum(:,2),...
+% %    stCount_Member_DisMean(:,3),stDis_Member_Count(:,3),stCount_Mission_DisMean(:,1),stMemberKer_Mission_Distance];
+% anRelat_Data=[compl_Mission,stCompl_Mission_Price,stDis_Mission_Count(:,3),stMemberKer_Mission_Distance];
+% count=60;
+% [anRelat_Prob,g]=disProb(anRelat_Data,count);
+% [n,m]=size(anRelat_Prob);
+% %分析定价规则主成分
+% [pcx,scorex,latentx,tsquarex]=princomp(anRelat_Prob(:,2:m));
+% ratio_latentx=latentx./sum(latentx);sum(ratio_latentx(1:3));
+% %对有效因素进行主因分析，可得主因2个，方差和占全部方差的91.9%。
+% % 以stMemberKer_Mission_Distance,stCompl_Mission_Price,stDis_Mission_Count(:,3)为各回归输入参数
+% %log_SucProb=[anRelat_Prob(:,10),anRelat_Prob(:,2),anRelat_Prob(:,3)];
+% %x=log_SucProb(:,1);
+% x=scorex(:,1);
+% y=g(:,1:2);
+% [b,dev,stats] = glmfit(x,y,'binomial','link','probit');
+% yfit = glmval(b, x,'probit','size',y(:,2));
+% scrsz = get(0,'ScreenSize');
+% hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
+% set(hF1,'Name','logit成败/因素分析图','Colormap',cool);
+% plot(x, y(:,1)./y(:,2),'o',x,yfit./y(:,2),'-','LineWidth',2)
+% %结果显示效果不好，误差太大;
+
+%%
+% %构造分析参数矩阵
+% ansys_Data=[compl_Mission,stCompl_Mission_Price,...
+%     stDis_Member_Count,stDis_Member_CreMean,...
+%     stDis_Member_DisMean,stDis_Member_MisSum,...
+%     stDis_Mission_Count,stDis_Mission_PriSum,...
+%     stDis_Mission_DisMean];
+% X=ansys_Data(:,2:23);
+% Y=ansys_Data(:,1);
+% %[pc,score,latent,tsquare]=princomp(X)  %主成分分析
+% %[ndim,prob,chisquare]=barttest(X,0.05)
+% %[b,bint,r,rint,stats]=regress(Y,X,0.05)
+ %%
+% %绘制指定半径内有效任务数、有效会员数的二维散点图，以任务价格分组。任务价格65-74.5区间按0.5元递增，75-85区间按5元递增。ccggggbbbbyyyymmmmmmwww
+% scrsz = get(0,'ScreenSize');
+% hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
+% set(hF1,'Name','价格分析图');
+% %gscatter(ansys_Data(:,8),ansys_Data(:,5),ansys_Data(:,2),'cgbyr','*o<+.',5)
+% %gplotmatrix(ansys_Data(:,6:8),ansys_Data(:,3:5),ansys_Data(:,1),'cgwww','o',5)
+% scatter3(ansys_Data(:,6),ansys_Data(:,7),ansys_Data(:,9),6,ansys_Data(:,1),'full','o')
+% xlabel('stDis_Mission_Count');
+% ylabel('stDis_Member_CreMean');
+% zlabel('stKer_Mission_Distance')
+%% 
+% %绘制指定半径内有效任务数、有效会员数、任务价格的三维散点图，以红色*表示未完成，绿色O表示完成。
+% ansys_Data1=[compl_Mission,compl_Mission_price,stat_Mission_Count,stat_Member_Count];
+% figure;
+% gscatter(ansys_Data1(:,7),ansys_Data1(:,5),ansys_Data1(:,1),'rb','xo');
+%%
+% %计算按5km半径内有效任务数统计相应的平均价格、价格标准差、符合条件的任务数、会员信誉值的值加上会员信誉的标准差，记入result_Data2矩阵。
+% ansys_Data2=[compl_Mission,compl_Mission_price,stat_Mission_Count(:,2),stat_Member_Mean(:,2)+stat_Member_Std(:,2)];
+% for ii=1:max(ansys_Data2(:,3))
+%     log_cul_Data2=(ansys_Data2(:,3)>ii-1) & (ansys_Data2(:,3)<=ii);
+%     cul_Data2=ansys_Data2(log_cul_Data2,:);
+%     result_Data2(ii,1)=ii;
+%     result_Data2(ii,2)=mean(cul_Data2(:,2));
+%     result_Data2(ii,3)=std(cul_Data2(:,2));
+%     result_Data2(ii,4)=length(cul_Data2(:,3));
+%     result_Data2(ii,5)=mean(cul_Data2(:,4));
+% end
+%%
+% 因素对价格分类作用图,寻找对分类有效的因素           'ccggggbbbbyyyymmmmmmrrr','o*o*+^o*+^o*+^o*+^<>o*+'
+%ansys_price_data=[stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd];  %1观察得
+%ansys_price_data=[stCount_Member_CreMean,stCount_Member_CreStd];                        %2观察得此二因素具有分类特性，stCount_Member_CreMean,stCount_Member_CreStd(:,2)
+%ansys_price_data=[stCount_Mission_DisMean,stCount_Mission_DisStd,stDis_Member_Count];   %3观察得stDis_Member_Count(:,3)具有分类特性
+%ansys_price_data=[stDis_Member_MisSum,stDis_Mission_Count];                             %4观察得stDis_Member_MisSum,stDis_Mission_Count(:,3)具有分类特性
+%ansys_price_data=[stKer_Mission_Distance,stMemberKer_Mission_Distance];                 %5观察得
+%ansys_price_data=[stDis_Member_CreMean,stDis_Member_DisMean,stDis_Mission_DisMean];     %6观察得stDis_Member_CreMean(:,2)
+% scrsz = get(0,'ScreenSize');
+% hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
+% set(hF1,'Name','价格因素图','Colormap',cool);
+% gplotmatrix(ansys_price_data,compl_Mission_price,[],'rgbymc','o*+^<>',2);             %用主要因素分析矩阵绘制散点矩阵图观察各因素对价格的影响
+%%
+
+%观察成败概率-因素规律
+anRelat_Data=[compl_Mission,stCompl_Mission_Price+stDis_Mission_PriSum(:,2),stDis_Mission_Count(:,2),stDis_Member_Count(:,2),...
+              stDis_Member_MisSum(:,2),stCount_Member_CreMean(:,2),stMemberKer_Mission_Distance];
+name={'compl_Mission';'stCompl_Mission_Price++stDis_Mission_PriSum(:,2)';'stDis_Mission_Count(:,2)';'stDis_Member_Count(:,2)';...
+      'stDis_Member_MisSum(:,2)';'stCount_Member_CreMean(:,2)';'stMemberKer_Mission_Distance'};
+count=10;
+for i=2:length(anRelat_Data(1,:))
+    anRelat_Data1=[anRelat_Data(:,1),anRelat_Data(:,i)];  
+    [anRelat_Prob,g]=disProb(anRelat_Data1,count);
+    [n,m]=size(anRelat_Prob);
+    scrsz = get(0,'ScreenSize');
+    hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
+    set(hF1,'Name','成败概率因素图','Colormap',spring);
+    scatter(anRelat_Prob(:,2),anRelat_Prob(:,1),100,g(:,2),'fill','o')
+    xlabel(name(i,1));
+end

@@ -6,12 +6,15 @@ token='m1';                                                 %¶ÁÈ¡ÒÑ½áÊøÏîÄ¿ÈÎÎñÊ
 loadfilename=strcat(strcat(pathWriteMat,token),'.mat');
 load(loadfilename,'compl_Mission_lat_lon','compl_Mission_price','compl_Mission','compl_Mission_ID');
 %%
-%   stCompl_Mission_Price			ÈÎÎñ¼Û¸ñ					
+%   stCompl_Mission_Price			ÈÎÎñ¼Û¸ñ
+%Ñ¡Ôñ5ÈË£¬22ÈË£¬60ÈËÍ³¼Æ
 % 	stCount_Member_MisSum			¶¨»áÔ±ÊıµÄÈÎÎñ×ÜÊı
 % 	stCount_Member_DisMean			¶¨»áÔ±ÊıµÄ»áÔ±Æ½¾ù¾àÀë		stCount_Member_DisStd
 % 	stCount_Member_CreMean      	¶¨»áÔ±ÊıµÄÆ½¾ùĞÅÓşÖµ 2	 stCount_Member_CreStd
+%Ñ¡Ôñ2¸öÈÎÎñ£¬5¸öÈÎÎñ£¬10¸öÈÎÎñ
 % 	stCount_Mission_DisMean     	¶¨ÈÎÎñÊıµÄÈÎÎñÆ½¾ù¾àÀë		stCount_Mission_DisStd 
 % 	stCount_Mission_PriMean     	¶¨ÈÎÎñÊıµÄÈÎÎñÆ½¾ù¼Û¸ñ		stCount_Mission_PriStd
+%Ñ¡Ôñ2¹«Àï£¬5¹«Àï£¬50¹«Àï
 % 	stDis_Member_Count          	¶¨¾àÀëµÄ»áÔ±×ÜÊı 3			
 % 	stDis_Member_CreMean        	¶¨¾àÀëµÄÆ½¾ù»áÔ±ĞÅÓşÖµ 4	stDis_Member_CreStd
 % 	stDis_Member_DisMean        	¶¨¾àÀëµÄ»áÔ±Æ½¾ù¾àÀë		 stDis_Member_DisStd
@@ -31,116 +34,165 @@ load(savefilename,'stCompl_Mission_Price','stCount_Member_MisSum','stCount_Membe
 	'stDis_Mission_PriSum','stDis_Mission_PriMean','stDis_Mission_PriStd','stDis_Mission_DisSum','stDis_Mission_DisMean','stDis_Mission_DisStd',...
 	'stKer_Mission_Distance','stMemberKer_Mission_Distance','stKer_Member_Distance');
 %%
-%NaNÊı¾İ´¦Àí£¬ÓÉÓÚ¶¨¾àÀëÍ³¼ÆÊ±ÔÚÒ»¶¨¾àÀëÄÚ´æÔÚÎŞ»áÔ±ºÍÎŞÈÎÎñ¿ÉÄÜ£¬ÓÖ²»¿ÉÄÜÀ©´ó¾àÀëÒÔÊÊÓ¦¸ö±ğÈÎÎñÌØ±ğÇé¿öÖ»ÓĞÇø±ğNaN£¬·Ö±ğ´¦Àí¡£
-%stDis_Member_CreMean stDis_Member_CreStd stDis_Member_DisMean stDis_Member_DisStd
-%stDis_Mission_DisMean stDis_Mission_DisStd stDis_Mission_PriMean stDis_Mission_PriStd
-% allNaN_Member_CreMean=[compl_Mission_price,stDis_Member_CreMean];
-% naN_Member_CreMean=allNaN_Member_CreMean(isnan(stDis_Member_CreMean(:,1)),:);
-%%
-% %ÒòËØÏà¹ØĞÔ·ÖÎö
-% ansys_relativity_data=[stCompl_Mission_Price,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd,...
+% %NaNÊı¾İ´¦Àí£¬ÓÉÓÚ¶¨¾àÀëÍ³¼ÆÊ±ÔÚÒ»¶¨¾àÀëÄÚ´æÔÚÎŞ»áÔ±ºÍÎŞÈÎÎñ¿ÉÄÜ,Òò´ËÇø·ÖÎªallNoNaN_Data£¬other_Data·Ö±ğ´¦Àí¡£
+% data=[compl_Mission,stCompl_Mission_Price,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd,...
 % 	stCount_Member_CreMean,stCount_Member_CreStd,stCount_Mission_DisMean,stCount_Mission_DisStd,...
-% 	stDis_Member_Count,stDis_Member_MisSum,stDis_Mission_Count,stKer_Mission_Distance,stMemberKer_Mission_Distance];
-% result_relat=corrcoef(ansys_relativity_data);
+% 	stCount_Mission_PriMean,stCount_Mission_PriStd,stDis_Member_Count,stDis_Member_CreSum,stDis_Member_CreMean,stDis_Member_CreStd,...
+% 	stDis_Member_DisSum,stDis_Member_DisMean,stDis_Member_DisStd,stDis_Member_MisSum,stDis_Mission_Count,...
+% 	stDis_Mission_PriSum,stDis_Mission_PriMean,stDis_Mission_PriStd,stDis_Mission_DisSum,stDis_Mission_DisMean,stDis_Mission_DisStd,...
+% 	stKer_Mission_Distance,stMemberKer_Mission_Distance];
+% name_Data1={'stCompl_Mission_Price','stCount_Member_MisSum1','stCount_Member_MisSum2','stCount_Member_MisSum3',...
+%     'stCount_Member_DisMean1','stCount_Member_DisMean2','stCount_Member_DisMean3',...
+%     'stCount_Member_DisStd1','stCount_Member_DisStd2','stCount_Member_DisStd3',...
+% 	'stCount_Member_CreMean1','stCount_Member_CreMean2','stCount_Member_CreMean3',...
+%     'stCount_Member_CreStd1','stCount_Member_CreStd2','stCount_Member_CreStd3',...
+%     'stCount_Mission_DisMean1','stCount_Mission_DisMean2','stCount_Mission_DisMean3',...
+%     'stCount_Mission_DisStd1','stCount_Mission_DisStd2','stCount_Mission_DisStd3',...
+% 	'stCount_Mission_PriMean1','stCount_Mission_PriMean2','stCount_Mission_PriMean3',...
+%     'stCount_Mission_PriStd1','stCount_Mission_PriStd2','stCount_Mission_PriStd3',...
+%     'stDis_Member_Count1','stDis_Member_Count2','stDis_Member_Count3',...
+%     'stDis_Member_CreSum1','stDis_Member_CreSum2','stDis_Member_CreSum3',...
+%     'stDis_Member_CreMean1','stDis_Member_CreMean2','stDis_Member_CreMean3',...
+%     'stDis_Member_CreStd1','stDis_Member_CreStd2','stDis_Member_CreStd3',...
+% 	'stDis_Member_DisSum1','stDis_Member_DisSum2','stDis_Member_DisSum3',...
+%     'stDis_Member_DisMean1','stDis_Member_DisMean2','stDis_Member_DisMean3',...
+%     'stDis_Member_DisStd1','stDis_Member_DisStd2','stDis_Member_DisStd3',...
+%     'stDis_Member_MisSum1','stDis_Member_MisSum2','stDis_Member_MisSum3',...
+%     'stDis_Mission_Count1','stDis_Mission_Count2','stDis_Mission_Count3',...
+% 	'stDis_Mission_PriSum1','stDis_Mission_PriSum2','stDis_Mission_PriSum3',...
+%     'stDis_Mission_PriMean1','stDis_Mission_PriMean2','stDis_Mission_PriMean3',...
+%     'stDis_Mission_PriStd1','stDis_Mission_PriStd2','stDis_Mission_PriStd3',...
+%     'stDis_Mission_DisSum1','stDis_Mission_DisSum2','stDis_Mission_DisSum3',...
+%     'stDis_Mission_DisMean1','stDis_Mission_DisMean2','stDis_Mission_DisMean3',...
+%     'stDis_Mission_DisStd1','stDis_Mission_DisStd2','stDis_Mission_DisStd3',...
+% 	'stKer_Mission_Distance','stMemberKer_Mission_Distance'};
+% data_noNaN=[compl_Mission,stCompl_Mission_Price,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd,...
+% 	stCount_Member_CreMean,stCount_Member_CreStd,stCount_Mission_DisMean,stCount_Mission_DisStd,...
+% 	stCount_Mission_PriMean,stCount_Mission_PriStd,stDis_Member_Count,stDis_Member_CreSum,stDis_Member_CreMean(:,3),stDis_Member_CreStd(:,3),...
+% 	stDis_Member_DisSum,stDis_Member_DisMean(:,3),stDis_Member_DisStd(:,3),stDis_Member_MisSum,stDis_Mission_Count,...
+% 	stDis_Mission_PriSum,stDis_Mission_PriMean(:,3),stDis_Mission_PriStd(:,3),stDis_Mission_DisSum,stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+% 	stKer_Mission_Distance,stMemberKer_Mission_Distance];
+% name_Data2={'stCompl_Mission_Price','stCount_Member_MisSum1','stCount_Member_MisSum2','stCount_Member_MisSum3',...
+%     'stCount_Member_DisMean1','stCount_Member_DisMean2','stCount_Member_DisMean3',...
+%     'stCount_Member_DisStd1','stCount_Member_DisStd2','stCount_Member_DisStd3',...
+% 	'stCount_Member_CreMean1','stCount_Member_CreMean2','stCount_Member_CreMean3',...
+%     'stCount_Member_CreStd1','stCount_Member_CreStd2','stCount_Member_CreStd3',...
+%     'stCount_Mission_DisMean1','stCount_Mission_DisMean2','stCount_Mission_DisMean3',...
+%     'stCount_Mission_DisStd1','stCount_Mission_DisStd2','stCount_Mission_DisStd3',...
+% 	'stCount_Mission_PriMean1','stCount_Mission_PriMean2','stCount_Mission_PriMean3',...
+%     'stCount_Mission_PriStd1','stCount_Mission_PriStd2','stCount_Mission_PriStd3',...
+%     'stDis_Member_Count1','stDis_Member_Count2','stDis_Member_Count3',...
+%     'stDis_Member_CreSum1','stDis_Member_CreSum2','stDis_Member_CreSum3',...
+%     'stDis_Member_CreMean3',...
+%     'stDis_Member_CreStd3',...
+% 	'stDis_Member_DisSum1','stDis_Member_DisSum2','stDis_Member_DisSum3',...
+%     'stDis_Member_DisMean3',...
+%     'stDis_Member_DisStd3',...
+%     'stDis_Member_MisSum1','stDis_Member_MisSum2','stDis_Member_MisSum3',...
+%     'stDis_Mission_Count1','stDis_Mission_Count2','stDis_Mission_Count3',...
+% 	'stDis_Mission_PriSum1','stDis_Mission_PriSum2','stDis_Mission_PriSum3',...
+%     'stDis_Mission_PriMean3',...
+%     'stDis_Mission_PriStd3',...
+%     'stDis_Mission_DisSum1','stDis_Mission_DisSum2','stDis_Mission_DisSum3',...
+%     'stDis_Mission_DisMean3',...
+%     'stDis_Mission_DisStd3',...
+% 	'stKer_Mission_Distance','stMemberKer_Mission_Distance'};
+% log_NoNData=sum(isnan(data),2)>0;
+% allNoNaN_Data=data(~log_NoNData,:);
+% other_Data=data_noNaN(log_NoNData,:);
+% %allNoNaNCompl_Prob=tabulate(allNoNaN_Data(:,1));    %×ÜÌåÍê³É¶È61.5%   530¸öÈÎÎñ
+% %otherCompl_Prob=tabulate(other_Data(:,1));          %×ÜÌåÍê³É¶È64.3%   205¸öÈÎÎñ
+% %%
+% %Ó¦ÓÃlogit»Ø¹é·¨½¨Ä£
+% % x_data1=allNoNaN_Data(:,2:end);
+% % y_data1=allNoNaN_Data(:,1);
+% % [prob_y1,prob_YValue1,b1,dev1,stats1]=logit_ansys(x_data1,y_data1);%Ô¤²â·ûºÏÂÊ86.42.02%,530;
+% % log_Remove=stats1.residd<2.5;       %Ïû³ı¸ö±ğÆæÒìµã
+% % x_data2=x_data1(log_Remove,:);
+% % y_data2=y_data1(log_Remove,:);
+% % [prob_y2,prob_YValue2,b2,dev2,stats2]=logit_ansys(x_data2,y_data2); %Ô¤²â·ûºÏÂÊ95.02%,502;
+% x_data3=other_Data(:,2:end);
+% y_data3=other_Data(:,1);
+% [prob_y3,prob_YValue3,b3,dev3,stats3]=logit_ansys(x_data3,y_data3);%Ô¤²â·ûºÏÂÊ85.25%,305;
+% % log_Remove3=stats3.residd<2.5;       %Ïû³ı¸ö±ğÆæÒìµã
+% % x_data4=x_data3(log_Remove3,:);
+% % y_data4=y_data3(log_Remove3,:);
+% % [prob_y4,prob_YValue4,b4,dev4,stats4]=logit_ansys(x_data4,y_data4); %Ô¤²â·ûºÏÂÊ96.58%,292;
+% %Öğ²½È¥³ı×î´ópÖµÒòËØ
+% %[valueName,prob_y,prob_YValue,b,dev,stats]=logit_ansysNum(x_data3,y_data3,name_Data2);
+% % %»æÖÆlogit±ê×¼»¯Àë²î²Ğ²îÍ¼
+% % scrsz = get(0,'ScreenSize');
+% % hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
+% % set(hF1,'Name','logit±ê×¼»¯²Ğ²îÍ¼','Colormap',spring);
+% % scatter(1:length(stats.residd),stats.residd,50,'+');
+%%
+% %ËùÓĞÈÎÎñ×Ü³É°ÜÂÊ
+% compl_Prob=tabulate(compl_Mission);  %×ÜÌåÍê³É¶È62.52%   835¸öÈÎÎñ
+% %Õû¸ö´óÇøµÄÔ­Ê¼¼Û¸ñÊı¾İ°´65-70¡¢70-75¡¢75¡¢80¡¢85·ÖÎª5¸ö´óÇøÖØĞÂ¹éÀà£»
+% filter_85=(compl_Mission_price<70)*65+(compl_Mission_price<75&compl_Mission_price>=70)*70+(compl_Mission_price==75)*75+(compl_Mission_price==80)*80+(compl_Mission_price==85)*85;
+% anRelat_Data=[compl_Mission,filter_85,stCompl_Mission_Price,stKer_Mission_Distance,stDis_Member_CreSum(:,2)];
+% anRelat_65=anRelat_Data(anRelat_Data(:,2)==65,:);anFreq_65=tabulate(anRelat_65(:,1));   % Íê³É¶È54.12% 510¸öÈÎÎñ
+% anRelat_70=anRelat_Data(anRelat_Data(:,2)==70,:);anFreq_70=tabulate(anRelat_70(:,1));   % Íê³É¶È74.4%  207¸öÈÎÎñ
+% anRelat_75=anRelat_Data(anRelat_Data(:,2)==75,:);anFreq_75=tabulate(anRelat_75(:,1));   % Íê³É¶È75.65% 78¸öÈÎÎñ
+% anRelat_80=anRelat_Data(anRelat_Data(:,2)==80,:);anFreq_80=tabulate(anRelat_80(:,1));   % Íê³É¶È69.23% 13¸öÈÎÎñ
+% anRelat_85=anRelat_Data(anRelat_Data(:,2)==85,:);anFreq_85=tabulate(anRelat_85(:,1));   % Íê³É¶È88.89% 27¸öÈÎÎñ
+% anFreq_price=[anFreq_65(2,2:3);anFreq_70(2,2:3);anFreq_75(2,2:3);anFreq_80(2,2:3);anFreq_85(2,2:3)];
+% anFreq_price=[[65,70,75,80,85]',anFreq_price];
 % scrsz = get(0,'ScreenSize');
 % hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
-% set(hF1,'Name','ÒòËØÏà¹ØĞÔÍ¼','Colormap',cool);
-% gplotmatrix(result_relat(:,1:5),(1:33)',[],'rgbymc','o*+^<>',2);%ÓÃÖ÷ÒªÒòËØ·ÖÎö¾ØÕó»æÖÆÉ¢µã¾ØÕóÍ¼¹Û²ì¸÷ÒòËØ¶Ô¼Û¸ñµÄÓ°Ïì
+% set(hF1,'Name','ÈÎÎñ¼Û¸ñ-Íê³ÉÇé¿öÍ¼','Colormap',cool);
+% scatter(anFreq_price(:,3),anFreq_price(:,2),12,anFreq_price(:,1),'full','o')
 %%
-% ÒòËØ¶Ô¼Û¸ñ·ÖÀà×÷ÓÃÍ¼,Ñ°ÕÒ¶Ô·ÖÀàÓĞĞ§µÄÒòËØ           'ccggggbbbbyyyymmmmmmrrr','o*o*+^o*+^o*+^o*+^<>o*+'
-%ansys_price_data=[stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd];  %1¹Û²ìµÃ
-%ansys_price_data=[stCount_Member_CreMean,stCount_Member_CreStd];                        %2¹Û²ìµÃ´Ë¶şÒòËØ¾ßÓĞ·ÖÀàÌØĞÔ£¬stCount_Member_CreMean,stCount_Member_CreStd(:,2)
-%ansys_price_data=[stCount_Mission_DisMean,stCount_Mission_DisStd,stDis_Member_Count];   %3¹Û²ìµÃstDis_Member_Count(:,3)¾ßÓĞ·ÖÀàÌØĞÔ
-%ansys_price_data=[stDis_Member_MisSum,stDis_Mission_Count];                             %4¹Û²ìµÃstDis_Member_MisSum,stDis_Mission_Count(:,3)¾ßÓĞ·ÖÀàÌØĞÔ
-%ansys_price_data=[stKer_Mission_Distance,stMemberKer_Mission_Distance];                 %5¹Û²ìµÃ
-%ansys_price_data=[stDis_Member_CreMean,stDis_Member_DisMean,stDis_Mission_DisMean];     %6¹Û²ìµÃstDis_Member_CreMean(:,2)
+% %ÒòËØÏà¹ØĞÔ·ÖÎö¡£°´ÈÎÎñ¾à»áÔ±ÖĞĞÄµÄ¾àÀë´ÓÔ¶µ½½ü£¬Ã¿25¸öÈÎÎñ1×é£¬¼ÆËãÃ¿×éµÄ³É¹¦¸ÅÂÊ¡£Í¨¹ı·ÖÎö¸÷×éÏàÓ¦ÒòËØµÄÆ½¾ùÖµµÄÏà¹ØĞÔ·ÖÎö£¬È·¶¨Ö÷ÒªÓ°ÏìÒòËØ¡£
+% %³É°Ü¸ÅÂÊ¾ØÕó×¼±¸
+% anRelat_Data=[compl_Mission,stCompl_Mission_Price,stCount_Member_MisSum(:,2),stCount_Member_DisMean(:,2),stCount_Member_DisStd(:,2),...
+% 	stCount_Member_CreMean(:,2),stCount_Member_CreStd(:,2),stCount_Mission_DisMean(:,2),stCount_Mission_DisStd(:,2),...
+% 	stCount_Mission_PriMean(:,2),stCount_Mission_PriStd(:,2),stDis_Member_Count(:,2),stDis_Member_CreSum(:,2),stDis_Member_CreMean(:,2),stDis_Member_CreStd(:,2),...
+% 	stDis_Member_DisSum(:,2),stDis_Member_DisMean(:,2),stDis_Member_DisStd(:,2),stDis_Member_MisSum(:,2),stDis_Mission_Count(:,2),...
+% 	stDis_Mission_PriSum(:,2),stDis_Mission_PriMean(:,2),stDis_Mission_PriStd(:,2),stDis_Mission_DisSum(:,2),stDis_Mission_DisMean(:,2),stDis_Mission_DisStd(:,2),...
+% 	stKer_Mission_Distance,stMemberKer_Mission_Distance];
+% count=25;
+% anRelat_Prob=condProb(anRelat_Data,count);
+% [n,m]=size(anRelat_Prob);
+% result_relat=corrcoef(anRelat_Prob);
 % scrsz = get(0,'ScreenSize');
 % hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
-% set(hF1,'Name','¼Û¸ñÒòËØÍ¼','Colormap',cool);
-% gplotmatrix(ansys_price_data,compl_Mission_price,[],'rgbymc','o*+^<>',2);             %ÓÃÖ÷ÒªÒòËØ·ÖÎö¾ØÕó»æÖÆÉ¢µã¾ØÕóÍ¼¹Û²ì¸÷ÒòËØ¶Ô¼Û¸ñµÄÓ°Ïì
+% set(hF1,'Name','³É°ÜÒòËØÏà¹ØĞÔÍ¼','Colormap',cool);
+% gplotmatrix(result_relat(:,1:5),(1:28)',[],'rgbymc','o*+^<>',2); 
+% %Ïà¹ØÏµÊıÅÅĞò
+% %6stCount_Member_CreMean(:,2)¡¢£¨7stCount_Member_CreStd(:,2)¡¢20stDis_Mission_Count(:,2)¡¢28stMemberKer_Mission_Distance¡¢21stDis_Mission_PriSum(:,2)£©
 %%
-% %·ÖÎö¶¨¼Û¹æÔòÖ÷³É·Ö
-% ansys_major_data=[stCount_Member_CreMean(:,1),stCount_Member_CreStd(:,2),stDis_Member_CreMean(:,2),stDis_Member_Count(:,3),...
-%     stDis_Member_MisSum(:,3),stDis_Mission_Count(:,3)]; %¹¹½¨Ö÷ÒªÒòËØ·ÖÎö¾ØÕó
-% [pcx,scorex,latentx,tsquarex]=princomp(ansys_major_data);
-% ratio_latentx=latentx./sum(latentx);sum(ratio_latentx(1:3));
-%   %¶ÔÓĞĞ§ÒòËØ½øĞĞÖ÷Òò·ÖÎö£¬¿ÉµÃÖ÷Òò3¸ö£¬·½²îºÍÕ¼È«²¿·½²îµÄ92.3%¡£
+% %°´ÈÎÎñ¾à»áÔ±ÖĞĞÄµÄ¾àÀë´ÓÔ¶µ½½ü¡£Ã¿22¸öÈÎÎñ1×é£¬¼ÆËãÃ¿×éµÄ³É¹¦¸ÅÂÊ¡£Í¨¹ı·ÖÎö¸÷×é³É¹¦¸ÅÂÊÓëÆäËüÒòËØµÄ³É°Ü¸ÅÂÊÒòËØÍ¼£¬È·¶¨Ó°ÏìÈÎÎñ³É°ÜµÄÒòËØ¼°Ó°Ïì·½Ê½¡£
+% %³É°Ü¸ÅÂÊ¾ØÕó×¼±¸
+% % anRelat_Data=[compl_Mission,stCompl_Mission_Price,stDis_Mission_Count(:,3),stDis_Member_CreSum(:,3),stCount_Member_CreMean(:,3),stDis_Member_MisSum(:,2),...
+% %   stCount_Member_DisMean(:,3),stDis_Member_Count(:,3),stCount_Mission_DisMean(:,1),stMemberKer_Mission_Distance];%Ö±¾õÑ¡È¡
+% anRelat_Data=[compl_Mission,stCompl_Mission_Price,stDis_Mission_PriSum(:,2),stDis_Mission_Count(:,2),stDis_Member_Count(:,2),...
+%               stDis_Member_MisSum(:,2),stCount_Member_CreMean(:,2),stMemberKer_Mission_Distance]; %²Î¿¼Ïà¹ØÏµÊı·ÖÎö½á¹û
+% name={'compl_Mission';'stCompl_Mission_Price';'stDis_Mission_PriSum(:,2)';'stDis_Mission_Count(:,2)';'stDis_Member_Count(:,2)';...
+%       'stDis_Member_MisSum(:,2)';'stCount_Member_CreMean(:,2)';'stMemberKer_Mission_Distance'};
+% [anRelat_Prob,g]=condProb(anRelat_Data,22);
+% [n,m]=size(anRelat_Prob);
+% %¹Û²ìÊı¾İ±ä»¯¹æÂÉ
 % scrsz = get(0,'ScreenSize');
 % hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
-% set(hF1,'Name','¼Û¸ñ·ÖÀàÍ¼','Colormap',cool);
-% %scatter(scorex(:,1),scorex(:,2),6,compl_Mission_price,'full','o')
-% scatter3(scorex(:,1),scorex(:,2),scorex(:,3),6,compl_Mission_price,'full','o')
-% %×÷Èı¸öÖ÷ÒòÓë¼Û¸ñÉ¢µã£¬¿É¼ûËùÓĞÒòËØ¶Ô¸ßĞÅÓşÖµ¡¢µÍÃÜ¶ÈµÄĞÎ³ÉµÄµÍ¼Û¸ñÈÎÎñµã¹À¼Æ×¼È·£»¶ÔµÍĞÅÓşÖµ¡¢¸ßÃÜ¶ÈÈÎÎñµãÎŞ·¨×¼È·Çø·Ö£¬¹À¼Æ»¹ÓĞÈÎÎñµã×ÔÉí¼ÛÖµÒòËØÈ±Ê§ÓĞ¹Ø¡£
+% set(hF1,'Name','³É°Ü¸ÅÂÊÒòËØÍ¼','Colormap',cool);
+% gplotmatrix(anRelat_Prob(:,2:m),anRelat_Prob(:,1),anRelat_Prob(:,m),'rgbymc','oooooo******++++++^^^^^^<<<<<<>>>>>>XX',8);             %»æÖÆÉ¢µã¾ØÕóÍ¼¹Û²ì¸÷ÒòËØ¶Ô³É°Ü¸ÅÂÊµÄÓ°Ïì
+% ylabel(name(2:end));
+% %scatter3(anRelat_Prob(:,2),anRelat_Prob(:,4),anRelat_Prob(:,5),6,anRelat_Prob(:,1),'full','o')
+% %½áÂÛ:ÈÎÎñÎ´Íê³ÉµÄÔ­ÒòÖ÷ÒªÊÇÈÎÎñ¼ä¾ºÕù¹ØÏµÇ¿¡¢ÈÎÎñ¶¨¼Û¹ıµÍµÄÓ°Ïì¡£
+% %     Õû¸öÈÎÎñ¸¶³ö¶ÔÈÎÎñÍê³É×÷ÓÃ¾ùºâ£¬Î´±íÏÖ³ö¾àÀëÔ¶µÄÈÎÎñÍê³ÉÄÑ¶È¹ı´óµÄÌØÕ÷¡£
+% %     ÈÎÎñ¼Û¸ñ¶ÔÈÎÎñÍê³ÉÆğÕı¼¤Àø×÷ÓÃ£¬ÈÎÎñ¼Û¸ñÔ½¸ßÈÎÎñÍê³ÉÔ½ºÃ¡£
+% %     ÈÎÎñ¼ä¾ºÕù¹ØÏµÔ½¸ß£¬ÈÎÎñÍê³ÉÔ½²î¡£
 %%
-% %Ó¦ÓÃÏßĞÔ»Ø¹é·¨½¨Ä£
-% %linearAnsys_Price=[stDis_Member_CreMean,stCount_Member_MisSum,stCount_Member_CreMean,stDis_Mission_Count,stCount_Member_CreMean(:,3).*stDis_Mission_Count(:,2)];
-% 
-% % %ÒÔÖ÷ÒªÒòËØÎª»Ø¹éÊäÈë²ÎÊı
-% % X=[ones(length(scorex(:,1)),1),scorex(:,1:3),scorex(:,1).*scorex(:,2),scorex(:,1).*scorex(:,3),scorex(:,1).*scorex(:,2).*scorex(:,3)];
-% % Y=compl_Mission_price;
-% % ÒÔ»áÔ±¶¨ÊıĞÅÓşÆ½¾ùÖµ£¬¶¨¾àÈÎÎñ×ÜÊıÎª»Ø¹éÊäÈë²ÎÊı
-% linearAnsys_Price=[stCount_Member_CreMean(:,3),stDis_Mission_Count(:,2),stCount_Member_CreMean(:,3).*stDis_Mission_Count(:,2)];
-% X=[ones(size(linearAnsys_Price(:,1))),linearAnsys_Price];
-% Y=compl_Mission_price;
-% %stepwise(X,Y);  %·Ö²½»Ø¹é£¬È·¶¨¿É¿¿µÄÊäÈë²ÎÊı
-% [b,bint,r,rint,stats]=regress(Y,X,0.05);
-% scrsz = get(0,'ScreenSize');
-% hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
-% set(hF1,'Name','¼Û¸ñ·ÖÎöÍ¼','Colormap',cool);
-% hist(r,30); %»Ø¹éÎó²îÍ³¼ÆÍ¼Ê¾
-% %½á¹ûÏÔÊ¾Ğ§¹û²»ºÃ£¬Îó²îÌ«´ó;
-%%
-%·ÖÎöÈÎÎñ³É°ÜÖ÷³É·Ö
-% Y=[compl_Mission,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_CreMean,stCount_Mission_DisMean,stCount_Mission_PriMean+repmat(stCompl_Mission_Price,1,3)];
-% [pcy,scorey,latenty,tsquarey]=princomp(Y);
-%·ÖÎö½á¹û£¬¿ÉÒÔÈ·¶¨Á¼³É·ÖstCompl_Mission_Price+stCount_Mission_PriMean£¬stCount_Mission_DisMean£¬stCount_Member_DisMean£¬µÚÈı×é
-%%
-% %¹¹Ôì·ÖÎö²ÎÊı¾ØÕó
-% ansys_Data=[compl_Mission,stCompl_Mission_Price,...
-%     stDis_Member_Count,stDis_Member_CreMean,...
-%     stDis_Member_DisMean,stDis_Member_MisSum,...
-%     stDis_Mission_Count,stDis_Mission_PriSum,...
-%     stDis_Mission_DisMean];
-% X=ansys_Data(:,2:23);
-% Y=ansys_Data(:,1);
-% %[pc,score,latent,tsquare]=princomp(X)  %Ö÷³É·Ö·ÖÎö
-% %[ndim,prob,chisquare]=barttest(X,0.05)
-% %[b,bint,r,rint,stats]=regress(Y,X,0.05)
- %%
-% %»æÖÆÖ¸¶¨°ë¾¶ÄÚÓĞĞ§ÈÎÎñÊı¡¢ÓĞĞ§»áÔ±ÊıµÄ¶şÎ¬É¢µãÍ¼£¬ÒÔÈÎÎñ¼Û¸ñ·Ö×é¡£ÈÎÎñ¼Û¸ñ65-74.5Çø¼ä°´0.5ÔªµİÔö£¬75-85Çø¼ä°´5ÔªµİÔö¡£ccggggbbbbyyyymmmmmmwww
-% scrsz = get(0,'ScreenSize');
-% hF1=figure('Position',[scrsz(3)/8 scrsz(4)/15 scrsz(3)*4/5 scrsz(4)*4/5]);
-% set(hF1,'Name','¼Û¸ñ·ÖÎöÍ¼');
-% %gscatter(ansys_Data(:,8),ansys_Data(:,5),ansys_Data(:,2),'cgbyr','*o<+.',5)
-% %gplotmatrix(ansys_Data(:,6:8),ansys_Data(:,3:5),ansys_Data(:,1),'cgwww','o',5)
-% scatter3(ansys_Data(:,6),ansys_Data(:,7),ansys_Data(:,9),6,ansys_Data(:,1),'full','o')
-% xlabel('stDis_Mission_Count');
-% ylabel('stDis_Member_CreMean');
-% zlabel('stKer_Mission_Distance')
-%% 
-% %»æÖÆÖ¸¶¨°ë¾¶ÄÚÓĞĞ§ÈÎÎñÊı¡¢ÓĞĞ§»áÔ±Êı¡¢ÈÎÎñ¼Û¸ñµÄÈıÎ¬É¢µãÍ¼£¬ÒÔºìÉ«*±íÊ¾Î´Íê³É£¬ÂÌÉ«O±íÊ¾Íê³É¡£
-% ansys_Data1=[compl_Mission,compl_Mission_price,stat_Mission_Count,stat_Member_Count];
-% figure;
-% gscatter(ansys_Data1(:,7),ansys_Data1(:,5),ansys_Data1(:,1),'rb','xo');
-%%
-% %¼ÆËã°´5km°ë¾¶ÄÚÓĞĞ§ÈÎÎñÊıÍ³¼ÆÏàÓ¦µÄÆ½¾ù¼Û¸ñ¡¢¼Û¸ñ±ê×¼²î¡¢·ûºÏÌõ¼şµÄÈÎÎñÊı¡¢»áÔ±ĞÅÓşÖµµÄÖµ¼ÓÉÏ»áÔ±ĞÅÓşµÄ±ê×¼²î£¬¼ÇÈëresult_Data2¾ØÕó¡£
-% ansys_Data2=[compl_Mission,compl_Mission_price,stat_Mission_Count(:,2),stat_Member_Mean(:,2)+stat_Member_Std(:,2)];
-% for ii=1:max(ansys_Data2(:,3))
-%     log_cul_Data2=(ansys_Data2(:,3)>ii-1) & (ansys_Data2(:,3)<=ii);
-%     cul_Data2=ansys_Data2(log_cul_Data2,:);
-%     result_Data2(ii,1)=ii;
-%     result_Data2(ii,2)=mean(cul_Data2(:,2));
-%     result_Data2(ii,3)=std(cul_Data2(:,2));
-%     result_Data2(ii,4)=length(cul_Data2(:,3));
-%     result_Data2(ii,5)=mean(cul_Data2(:,4));
-% end
-%%
-% ansys_Data3=[compl_Mission,compl_Mission_price,stat_Mission_Count(:,2),stat_Member_count(:,2)];
-% for ii=2:max(ansys_Data3(:,3))
-%     log_cul_Data3=(ansys_Data3(:,3)>ii-1.1) & (ansys_Data3(:,3)<ii);
-%     cul_Data3=ansys_Data3(log_cul_Data3,:);
-%     X=cul_Data3(:,2);
-%     %probplot('exponential',cul_Data3(:,2));figure(gcf)   
-%     gscatter(ansys_Data1(:,7),ansys_Data1(:,5),ansys_Data1(:,1),'rb','xo')
-% end
-
+% Éñ¾­ÍøÂç·ÖÎö
+data_noNaN=[compl_Mission,stCompl_Mission_Price,stCount_Member_MisSum,stCount_Member_DisMean,stCount_Member_DisStd,...
+	stCount_Member_CreMean,stCount_Member_CreStd,stCount_Mission_DisMean,stCount_Mission_DisStd,...
+	stCount_Mission_PriMean,stCount_Mission_PriStd,stDis_Member_Count,stDis_Member_CreSum,stDis_Member_CreMean(:,3),stDis_Member_CreStd(:,3),...
+	stDis_Member_DisSum,stDis_Member_DisMean(:,3),stDis_Member_DisStd(:,3),stDis_Member_MisSum,stDis_Mission_Count,...
+	stDis_Mission_PriSum,stDis_Mission_PriMean(:,3),stDis_Mission_PriStd(:,3),stDis_Mission_DisSum,stDis_Mission_DisMean(:,3),stDis_Mission_DisStd(:,3),...
+	stKer_Mission_Distance,stMemberKer_Mission_Distance];
+x1=data_noNaN(:,2:end);
+y1=data_noNaN(:,1);
+x=x1';
+y=y1';
+y=full(ind2vec(y+1));

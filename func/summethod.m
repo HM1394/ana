@@ -1,0 +1,9 @@
+function [wA,lambda,CI,CR]=summethod(A)
+[n,m]=size(A);
+wij=A./repmat(sum(A),n,1);
+wi=sum(wij,2);
+wA=wi/sum(wi);
+lambda=mean((A*wA)./wA);
+CI=(lambda-m)/(m-1);
+RI=[0,0,0.58,0.9,1.12,1.24,1.32,1.41,1.45,1.49,1.51];
+CR=CI./RI(n);

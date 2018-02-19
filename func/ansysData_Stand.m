@@ -35,7 +35,7 @@ for id=1:length(ctrs_member(:,1))                 %¼ÆËãÃ¿¸öÈÎÎñµãÓë»áÔ±ÖĞĞÄµÄ¾àÀ
 end
 %%
 standData=@(input) input./repmat(nanstd(input),length(input(:,1)),1);   %Êı¾İ±ê×¼»¯º¯Êı
-stCompl_Mission_Price=compl_Mission_price./std(compl_Mission_price);    %ÈÎÎñ¼Û¸ñ
+stCompl_Mission_Price=(compl_Mission_price-60)./std(compl_Mission_price);    %ÈÎÎñ¼Û¸ñ
 %¶¨ÈÎÎñÊı¡¢¶¨»áÔ±ÊıµÄÍ³¼ÆÊı¾İ±ê×¼»¯
 stCount_Member_MisSum=standData(anyCount_Member_MisSum);                %¶¨»áÔ±ÊıµÄÈÎÎñ×ÜÊı 1
 stCount_Member_DisMean=standData(anyCount_Member_DisMean);              %¶¨»áÔ±ÊıµÄ»áÔ±Æ½¾ù¾àÀë
